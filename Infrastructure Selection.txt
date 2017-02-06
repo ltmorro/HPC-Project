@@ -1,0 +1,14 @@
+1. SDSC Comet
+	~Site:http://www.sdsc.edu/support/user_guides/comet.html
+	~Operating System:CentOS
+	~Scheduler:SLURM
+	~File System:NFS,Lustre
+	~Representative CloudLab site: Cloudlab Clemson
+
+2. SDSC Gordon
+	~Site: http://www.sdsc.edu/support/user_guides/gordon.html
+	~Operating System:CentOS
+	~Scheduler:Catalina,TORQUE
+	~File System:NFS,Lustre
+	~Representative CloudLab site: Cloudlab Clemson
+ 
