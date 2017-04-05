@@ -44,14 +44,14 @@ for i in range(10):
         #node.ram = 8192
 
         #bs1 = node.Blockstore('bs', '/home')
-        #bs.size = '64GB'
+        #bs1.size = '64GB'
         #bs2 = node.Blockstore('bs', '/scratch')
-        #bs.size = '1024GB'
+        #bs2.size = '1024GB'
 
         bs1 = node.Blockstore('bs', '/home')
-        bs.size = '1GB'
+        bs1.size = '1GB'
         bs2 = node.Blockstore('bs', '/scratch')
-        bs.size = '1GB'
+        bs2.size = '1GB'
 
         node.addService(rspec.Execute(shell='/bin/sh', command='yum install nfs-utils nfs-utils-lib'))
         node.addService(rspec.Execute(shell='/bin/sh', command='chkconfig nfs-server on; service rpcbind start; service nfs-server start'))
