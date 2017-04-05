@@ -63,7 +63,7 @@ for i in range(10):
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory >/root/designation'))
 
         node.cores = 4
-        node.ram = 65536
+        node.ram = 16384
         node.disk = 4
     else:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute >/root/designation'))
