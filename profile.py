@@ -30,23 +30,27 @@ for i in range(10):
     if i == 0:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo login >/root/designation'))
 
-        node.cores = 1
-        node.ram = 1024
-        node.disk = 4
+        #node.cores = 1
+        #node.ram = 1024
+        #node.disk = 4
 
         node.routable_control_ip = True
     elif i == 1:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo storage >/root/designation'))
 
-        node.cores = 1
-        node.ram = 8192
-        node.disk = 4
+        #node.cores = 1
+        #node.ram = 8192
+        #node.disk = 4
 
-        bs = node.Blockstore('bs', '/home')
-        bs.size = '64GB'
+        #bs1 = node.Blockstore('bs', '/home')
+        #bs.size = '64GB'
+        #bs2 = node.Blockstore('bs', '/scratch')
+        #bs.size = '1024GB'
 
-        bs = node.Blockstore('bs', '/scratch')
-        bs.size = '1024GB'
+        bs1 = node.Blockstore('bs', '/home')
+        bs.size = '1GB'
+        bs2 = node.Blockstore('bs', '/scratch')
+        bs.size = '1GB'
 
         node.addService(rspec.Execute(shell='/bin/sh', command='yum install nfs-utils nfs-utils-lib'))
         node.addService(rspec.Execute(shell='/bin/sh', command='chkconfig nfs on; service rpcbind start; service nfs start'))
@@ -56,20 +60,20 @@ for i in range(10):
     elif i == 2:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu >/root/designation'))
 
-        node.cores = 2
-        node.ram = 8192
-        node.disk = 4
+        #node.cores = 2
+        #node.ram = 8192
+        #node.disk = 4
     elif i == 3:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory >/root/designation'))
 
-        node.cores = 4
-        node.ram = 16384
-        node.disk = 4
+        #node.cores = 4
+        #node.ram = 16384
+        #node.disk = 4
     else:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute >/root/designation'))
 
-        node.cores = 2
-        node.ram = 8192
-        node.disk = 4
+        #node.cores = 2
+        #node.ram = 8192
+        #node.disk = 4
 
 portal.context.printRequestRSpec(request)
