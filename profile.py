@@ -36,7 +36,7 @@ for i in range(10):
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu'))
     elif i == 3:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory'))
-    elif:
+    else:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute'))
 
 portal.context.printRequestRSpec(request)
