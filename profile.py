@@ -32,6 +32,11 @@ for i in range(10):
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo login >/root/designation'))
     elif i == 1:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo storage >/root/designation'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='yum install nfs-utils nfs-utils-lib'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='chkconfig nfs on; service rpcbind start; service nfs start'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='mkdir /storage'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='echo /storage *(rw,sync,no_root_squash,no_subtree_check) >/etc/exports'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='exportfs -a'))
     elif i == 2:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu >/root/designation'))
     elif i == 3:
