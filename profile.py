@@ -29,14 +29,14 @@ for i in range(10):
     link.addInterface(iface)
 
     if i == 0:
-        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo login'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo login >/root/designation'))
     elif i == 1:
-        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo storage'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo storage >/root/designation'))
     elif i == 2:
-        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu >/root/designation'))
     elif i == 3:
-        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory >/root/designation'))
     else:
-        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute >/root/designation'))
 
 portal.context.printRequestRSpec(request)
