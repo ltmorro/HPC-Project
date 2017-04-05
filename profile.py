@@ -42,13 +42,16 @@ for i in range(10):
         node.ram = 8192
         node.disk = 4
 
-        bs = node.Blockstore('bs', '/mydata')
+        bs = node.Blockstore('bs', '/home')
+        bs.size = '64GB'
+
+        bs = node.Blockstore('bs', '/scratch')
         bs.size = '1024GB'
 
         node.addService(rspec.Execute(shell='/bin/sh', command='yum install nfs-utils nfs-utils-lib'))
         node.addService(rspec.Execute(shell='/bin/sh', command='chkconfig nfs on; service rpcbind start; service nfs start'))
-        node.addService(rspec.Execute(shell='/bin/sh', command='mkdir /storage'))
-        node.addService(rspec.Execute(shell='/bin/sh', command='echo /storage *(rw,sync,no_root_squash,no_subtree_check) >/etc/exports'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='echo /home *(rw,sync,no_root_squash,no_subtree_check) >/etc/exports'))
+        node.addService(rspec.Execute(shell='/bin/sh', command='echo /scratch *(rw,sync,no_root_squash,no_subtree_check) >/etc/exports'))
         node.addService(rspec.Execute(shell='/bin/sh', command='exportfs -a'))
     elif i == 2:
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu >/root/designation'))
