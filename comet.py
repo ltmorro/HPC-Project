@@ -28,6 +28,15 @@ for i in range(10):
     iface.addAddress(rspec.IPv4Address('192.168.1.' + str(i + 1), '255.255.255.0'))
     link.addInterface(iface)
 
-    node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo hi'))
+    if i == 0:
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo login'))
+    elif i == 1:
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo storage'))
+    elif i == 2:
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo gpu'))
+    elif i == 3:
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo large memory'))
+    elif:
+        node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo compute'))
 
 portal.context.printRequestRSpec(request)
