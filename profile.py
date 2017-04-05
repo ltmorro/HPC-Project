@@ -79,6 +79,7 @@ for i in range(10):
 
         #node.cores = 2
         #node.ram = 8192
+        node.ram = 1024
 
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo echo 192.168.1.2:/home /home nfs defaults 0 0 >>/etc/fstab'))
         node.addService(rspec.Execute(shell='/bin/sh', command='sudo mount -a'))
