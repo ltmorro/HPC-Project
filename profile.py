@@ -27,6 +27,9 @@ for i in range(10):
     iface.addAddress(rspec.IPv4Address('192.168.1.' + str(i + 1), '255.255.255.0'))
     link.addInterface(iface)
 
+    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'"))
+    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys2'"))
+
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
 
@@ -37,6 +40,8 @@ for i in range(10):
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
+        node.addService(rspec.Execute(shell='sh', command='''sudo -i su -c "sed -i -e 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config"'''))
+
     elif i == 1:
         node.addService(rspec.Execute(shell='sh', command='echo storage | sudo tee /root/designation'))
 
@@ -83,5 +88,13 @@ for i in range(10):
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
+
+    #install openmpi on all nodes except the storage node
+    if i != 1:
+	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y epel-release'))
+	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y python-devel python-pip'))
+	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y openmpi openmpi-devel'))
+	    node.addService(rspec.Execute(shell='sh', command='source /etc/profile'))
+	    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'module load mpi/openmpi-x86_64; pip install mpi4py'"))
 
 portal.context.printRequestRSpec(request)
