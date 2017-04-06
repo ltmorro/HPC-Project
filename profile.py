@@ -27,8 +27,6 @@ for i in range(10):
     iface.addAddress(rspec.IPv4Address('192.168.1.' + str(i + 1), '255.255.255.0'))
     link.addInterface(iface)
 
-    node.addService(rspec.Execute(shell='sh', command='id | tee /tmp/id'))
-
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
 
@@ -37,7 +35,7 @@ for i in range(10):
 
         node.routable_control_ip = True
 
-        node.addService(rspec.Execute(shell='sh', command='sudo echo 192.168.1.2:/home /home nfs defaults 0 0 >>/etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     elif i == 1:
         node.addService(rspec.Execute(shell='sh', command='echo storage | sudo tee /root/designation'))
@@ -58,8 +56,8 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl enable nfs-server'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl start nfs-server'))
-        node.addService(rspec.Execute(shell='sh', command='echo /home *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
-        node.addService(rspec.Execute(shell='sh', command='echo /scratch *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='echo "/home *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='echo "/scratch *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports'))
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
