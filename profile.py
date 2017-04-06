@@ -28,17 +28,17 @@ for i in range(10):
     link.addInterface(iface)
 
     if i == 0:
-        node.addService(rspec.Execute(shell='bash', command='sudo echo login >/root/designation'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo login >/root/designation'))
 
         #node.cores = 1
         #node.ram = 1024
 
         node.routable_control_ip = True
 
-        node.addService(rspec.Execute(shell='bash', command='sudo echo 192.168.1.2:/home /home nfs defaults 0 0 >>/etc/fstab'))
-        node.addService(rspec.Execute(shell='bash', command='sudo mount -a'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo 192.168.1.2:/home /home nfs defaults 0 0 >>/etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     elif i == 1:
-        node.addService(rspec.Execute(shell='bash', command='sudo echo storage >/root/designation'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo storage >/root/designation'))
 
         #node.cores = 1
         #node.ram = 8192
@@ -53,35 +53,35 @@ for i in range(10):
         bs2 = node.Blockstore('bs2', '/scratch')
         bs2.size = '1GB'
 
-        node.addService(rspec.Execute(shell='bash', command='sudo yum install nfs-utils nfs-utils-lib'))
-        node.addService(rspec.Execute(shell='bash', command='sudo systemctl enable nfs-server'))
-        node.addService(rspec.Execute(shell='bash', command='sudo systemctl start nfs-server'))
-        node.addService(rspec.Execute(shell='bash', command='echo /home *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
-        node.addService(rspec.Execute(shell='bash', command='echo /scratch *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
-        node.addService(rspec.Execute(shell='bash', command='sudo exportfs -a'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib'))
+        node.addService(rspec.Execute(shell='sh', command='sudo systemctl enable nfs-server'))
+        node.addService(rspec.Execute(shell='sh', command='sudo systemctl start nfs-server'))
+        node.addService(rspec.Execute(shell='sh', command='echo /home *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='echo /scratch *(rw,sync,no_root_squash,no_subtree_check) | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
     elif i == 2:
-        node.addService(rspec.Execute(shell='bash', command='sudo echo gpu >/root/designation'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo gpu >/root/designation'))
 
         #node.cores = 2
         #node.ram = 8192
 
-        node.addService(rspec.Execute(shell='bash', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='bash', command='sudo mount -a'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     elif i == 3:
-        node.addService(rspec.Execute(shell='bash', command='sudo echo large memory >/root/designation'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo large memory >/root/designation'))
 
         #node.cores = 4
         #node.ram = 16384
 
-        node.addService(rspec.Execute(shell='bash', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='bash', command='sudo mount -a'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     else:
-        node.addService(rspec.Execute(shell='bash', command='sudo echo compute >/root/designation'))
+        node.addService(rspec.Execute(shell='sh', command='sudo echo compute >/root/designation'))
 
         #node.cores = 2
         #node.ram = 8192
 
-        node.addService(rspec.Execute(shell='bash', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='bash', command='sudo mount -a'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
 
 portal.context.printRequestRSpec(request)
