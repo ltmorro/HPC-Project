@@ -30,6 +30,8 @@ for i in range(10):
     node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'"))
     node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys2'"))
     node.addService(rspec.Execute(shell='sh', command='''sudo -i su -c \\"sed -i -e 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config\\"'''))
+    node.addService(rspec.Execute(shell='sh', command="sudo sed -i 's/\/bin\/tcsh/\/bin\/bash/g' /etc/passwd"))
+
 
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
