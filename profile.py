@@ -29,6 +29,9 @@ for i in range(10):
 
     node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'"))
     node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys2'"))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" >>/etc/bashrc'))
+    node.addService(rspec.Execute(shell='sh', command="echo 'alias mpirun=''' >>/etc/bashrc"))
+
 
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
