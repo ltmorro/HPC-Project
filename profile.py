@@ -21,7 +21,7 @@ request.addTour(tour)
 link = request.LAN('lan')
 
 for i in range(10):
-    node = request.RawPC('node' + str(i))
+    node = request.XenVM('node' + str(i))
     node.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS72-64-STD'
     iface = node.addInterface('if' + str(i))
     iface.addAddress(rspec.IPv4Address('192.168.1.' + str(i + 1), '255.255.255.0'))
@@ -36,8 +36,8 @@ for i in range(10):
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
 
-        #node.cores = 1
-        #node.ram = 1024
+        node.cores = 1
+        node.ram = 1024
 
         node.routable_control_ip = True
 
@@ -51,18 +51,13 @@ for i in range(10):
     elif i == 1:
         node.addService(rspec.Execute(shell='sh', command='echo storage | sudo tee /root/designation'))
 
-        #node.cores = 1
-        #node.ram = 8192
+        node.cores = 1
+        node.ram = 8192
 
-        #bs1 = node.Blockstore('bs', '/users')
-        #bs1.size = '64GB'
-        #bs2 = node.Blockstore('bs', '/scratch')
-        #bs2.size = '1024GB'
-
-        bs1 = node.Blockstore('bs1', '/users')
-        bs1.size = '1GB'
-        bs2 = node.Blockstore('bs2', '/scratch')
-        bs2.size = '1GB'
+        bs1 = node.Blockstore('bs', '/users')
+        bs1.size = '64GB'
+        bs2 = node.Blockstore('bs', '/scratch')
+        bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
         node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib'))
@@ -77,8 +72,8 @@ for i in range(10):
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
 
-        #node.cores = 2
-        #node.ram = 8192
+        node.cores = 2
+        node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
@@ -89,8 +84,8 @@ for i in range(10):
     elif i == 3:
         node.addService(rspec.Execute(shell='sh', command='echo large memory | sudo tee /root/designation'))
 
-        #node.cores = 4
-        #node.ram = 16384
+        node.cores = 4
+        node.ram = 16384
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
@@ -101,8 +96,8 @@ for i in range(10):
     else:
         node.addService(rspec.Execute(shell='sh', command='echo compute | sudo tee /root/designation'))
 
-        #node.cores = 2
-        #node.ram = 8192
+        node.cores = 2
+        node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
@@ -119,6 +114,5 @@ for i in range(10):
 	    node.addService(rspec.Execute(shell='sh', command='source /etc/profile'))
 	    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'module load mpi/openmpi-x86_64; pip install mpi4py'"))
             node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
-            node.addService(rspec.Execute(shell='sh', command='''echo \\"alias mpirun='mpirun --allow-run-as-root -mca btl ^openib -host node0,node2,node3,node4,node5,node6,node7,node8,node9 '\\" | sudo tee -a /etc/bashrc'''))
 
 portal.context.printRequestRSpec(request)
