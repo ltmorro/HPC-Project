@@ -16,7 +16,7 @@ for j in range(0, 500):
         elif(j>=10):
             f = gzip.open('/scratch3/ghadams/gtrace/job_events/part-000'+str(j)+'-of-00500.csv.gz', "rt")
         else:
-            f = gzip.open('/scratch3/ghadams/gtrace/job_events/part-0000'+str(j)+'-of-00500.csv.gz', "rt")                
+            f = gzip.open('/scratch3/ghadams/gtrace/job_events/part-0000'+str(j)+'-of-00500.csv.gz', "rt")
         for line in f:
             id = line.split(',')[2]
             ids.append(id)

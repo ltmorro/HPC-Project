@@ -61,8 +61,8 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl enable nfs-server'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl start nfs-server'))
-        node.addService(rspec.Execute(shell='sh', command='echo "/home *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports'))
-        node.addService(rspec.Execute(shell='sh', command='echo "/scratch *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='echo \"/home *(rw,sync,no_root_squash,no_subtree_check)\" | sudo tee -a /etc/exports'))
+        node.addService(rspec.Execute(shell='sh', command='echo \"/scratch *(rw,sync,no_root_squash,no_subtree_check)\" | sudo tee -a /etc/exports'))
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
