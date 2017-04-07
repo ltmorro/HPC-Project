@@ -114,5 +114,6 @@ for i in range(10):
 	    node.addService(rspec.Execute(shell='sh', command='source /etc/profile'))
 	    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'module load mpi/openmpi-x86_64; pip install mpi4py'"))
             node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
+            node.addService(rspec.Execute(shell='sh', command='''echo \\"alias mpirun='mpirun -mca btl ^openib -host node0,node2,node3,node4,node5,node6,node7,node8,node9 '\\" | sudo tee -a /etc/bashrc'''))
 
 portal.context.printRequestRSpec(request)
