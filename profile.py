@@ -72,9 +72,8 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='echo \\"/scratch *(rw,sync,no_root_squash,no_subtree_check)\\" | sudo tee -a /etc/exports'))
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
 
-        node.addService(rspec.Execute(shell='sh', command='cd /users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} mkdir -p /users/{}/.ssh \;'))
-        node.addService(rspec.Execute(shell='sh', command='cd /users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} ssh-keygen -P \'\' \;'))
-        node.addService(rspec.Execute(shell='sh', command='cd /users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} sh -c \'cat /users/{}/.ssh/id_rsa.pub | tee -a /users/{}/.ssh/authorized_keys\' \;'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/keys.sh'))
+        node.addService(rspec.Execute(shell='sh', command='/local/repository/keys.sh'))
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
 
