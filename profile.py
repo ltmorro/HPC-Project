@@ -39,6 +39,7 @@ for i in range(10):
         node.routable_control_ip = True
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
         node.addService(rspec.Execute(shell='sh', command='''sudo -i su -c \\"sed -i -e 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config\\"'''))
 
@@ -71,6 +72,7 @@ for i in range(10):
         #node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     elif i == 3:
         node.addService(rspec.Execute(shell='sh', command='echo large memory | sudo tee /root/designation'))
@@ -79,6 +81,7 @@ for i in range(10):
         #node.ram = 16384
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     else:
         node.addService(rspec.Execute(shell='sh', command='echo compute | sudo tee /root/designation'))
@@ -87,6 +90,7 @@ for i in range(10):
         #node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/home /home nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
 
     #install openmpi on all nodes except the storage node
