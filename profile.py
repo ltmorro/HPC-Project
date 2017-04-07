@@ -116,8 +116,8 @@ for i in range(10):
             node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
             node.addService(rspec.Execute(shell='sh', command='''echo \\"alias mpirun='mpirun --allow-run-as-root -mca btl ^openib -host node0,node2,node3,node4,node5,node6,node7,node8,node9 '\\" | sudo tee -a /etc/bashrc'''))
 
-            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} mkdir -p /users/{}/.ssh \;')
-            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} ssh-keygen -P \'\' \;')
-            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} cp /users/{}/.ssh/id_rsa.pub /users/{}/.ssh/authorized_keys \;')
+            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} mkdir -p /users/{}/.ssh \;'))
+            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} ssh-keygen -P \'\' \;'))
+            node.addService(rspec.Execute(shell='sh', command='cd users; find * -mindepth 0 -maxdepth 0 -exec sudo -u {} cp /users/{}/.ssh/id_rsa.pub /users/{}/.ssh/authorized_keys \;'))
 
 portal.context.printRequestRSpec(request)
