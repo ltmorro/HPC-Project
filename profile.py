@@ -83,7 +83,7 @@ for i in range(10):
 
         node.addService(rspec.Execute(shell='sh', command='sudo touch /root/configured'))
 
-        node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
+        node.addService(rspec.Execute(shell='sh', command='sudo touch /root/reboot'))
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
 
@@ -150,9 +150,9 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo touch /root/configured'))
 
         # wait for storage node
-        node.addService(rspec.Execute(shell='sh', command='while not ssh node1 cat /root/configured; do sleep 10; done'))
+        node.addService(rspec.Execute(shell='sh', command='until ssh node1 cat /root/configured; do sleep 10; done'))
 
         # reboot systems
-        node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
+        node.addService(rspec.Execute(shell='sh', command='sudo touch /root/reboot'))
 
 portal.context.printRequestRSpec(request)
