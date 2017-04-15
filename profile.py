@@ -32,6 +32,11 @@ for i in range(10):
     node.addService(rspec.Execute(shell='sh', command='''sudo -i su -c \\"sed -i -e 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config\\"'''))
     node.addService(rspec.Execute(shell='sh', command="sudo sed -i 's/\/bin\/tcsh/\/bin\/bash/g' /etc/passwd"))
 
+    node.addService(rspec.Execute(shell='sh', command='echo \\"[lustre-client]\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"baseurl=https://downloads.hpdd.intel.com/public/lustre/latest-release/el7.3.1611/client/\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"[lustre-server]\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"baseurl=https://downloads.hpdd.intel.com/public/lustre/latest-release/el7.3.1611/server/\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='sudo yum install lustre-client'))
 
     if i == 0:
         node.addService(rspec.Execute(shell='sh', command='echo login | sudo tee /root/designation'))
@@ -42,10 +47,10 @@ for i in range(10):
         node.routable_control_ip = True
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /users'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/users /users nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
 
     elif i == 1:
@@ -56,16 +61,19 @@ for i in range(10):
 
         bs1 = node.Blockstore('bs', '/users')
         bs1.size = '64GB'
-        bs2 = node.Blockstore('bs', '/scratch')
+        bs2 = node.Blockstore('bs', '/mnt')
         bs2.size = '1024GB'
 
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
-        node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib lustre'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl enable nfs-server'))
         node.addService(rspec.Execute(shell='sh', command='sudo systemctl start nfs-server'))
         node.addService(rspec.Execute(shell='sh', command='echo \\"/users *(rw,sync,no_root_squash,no_subtree_check)\\" | sudo tee -a /etc/exports'))
-        node.addService(rspec.Execute(shell='sh', command='echo \\"/scratch *(rw,sync,no_root_squash,no_subtree_check)\\" | sudo tee -a /etc/exports'))
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
+
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
+        node.addService(rspec.Execute(shell='sh', command='sudo dd if=/dev/zero of=/mnt/scratch.img bs=16M count=65535'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /mnt/scratch.img'))
+        node.addService(rspec.Execute(shell='sh', command='mount -t lustre /mnt/scratch.img /oasis/scratch/comet'))
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/keys.sh'))
         node.addService(rspec.Execute(shell='sh', command='/local/repository/keys.sh'))
@@ -76,10 +84,10 @@ for i in range(10):
         node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /users'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/users /users nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     elif i == 3:
         node.addService(rspec.Execute(shell='sh', command='echo large memory | sudo tee /root/designation'))
@@ -88,10 +96,10 @@ for i in range(10):
         node.ram = 16384
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /users'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/users /users nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
     else:
         node.addService(rspec.Execute(shell='sh', command='echo compute | sudo tee /root/designation'))
@@ -100,10 +108,10 @@ for i in range(10):
         node.ram = 8192
 
         node.addService(rspec.Execute(shell='sh', command='sudo rm -rf /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /users'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkdir /scratch'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /users'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/users /users nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/scratch /scratch nfs defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
         node.addService(rspec.Execute(shell='sh', command='sudo mount -a'))
 
     #install openmpi on all nodes except the storage node
