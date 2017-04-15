@@ -7,11 +7,8 @@ request = rspec.Request()
 
 tourDescription = 'This profile sets up a mini cluster modeled after SDSC Comet.'
 
-tourInstructions = \
-"""
-### Basic Instructions
-Instantiate the profile and it should be ready to go with NFS users directory, Lustre scratch directory, OpenMPI, and mpi4py. For convenience, each user has an SSH key generated for them and OpenMPI is automatically added to users' profiles. These allows MPI programs to run out of the box without user configuration.
-"""
+tourInstructions = """### Basic Instructions
+Instantiate the profile and it should be ready to go with NFS users directory, Lustre scratch directory, OpenMPI, and mpi4py. For convenience, each user has an SSH key generated for them and OpenMPI is automatically added to users' profiles. These allows MPI programs to run out of the box without user configuration."""
 
 tour = IG.Tour()
 tour.Description(IG.Tour.TEXT,tourDescription)
