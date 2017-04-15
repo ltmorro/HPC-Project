@@ -10,7 +10,7 @@ tourDescription = 'This profile sets up a mini cluster modeled after SDSC Comet.
 tourInstructions = \
 """
 ### Basic Instructions
-None yet.
+Instantiate the profile and it should be ready to go with NFS users directory, Lustre scratch directory, OpenMPI, and mpi4py. For convenience, each user has an SSH key generated for them and OpenMPI is automatically added to users' profiles. These allows MPI programs to run out of the box without user configuration.
 """
 
 tour = IG.Tour()
@@ -146,7 +146,7 @@ for i in range(10):
             node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
 
             # wait for storage node
-            node.addService(rspec.Execute(shell='sh', command='sleep 120'))
+            node.addService(rspec.Execute(shell='sh', command='sleep 600'))
 
     # reboot all systems
     node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
