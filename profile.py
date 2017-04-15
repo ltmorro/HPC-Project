@@ -105,7 +105,7 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /users'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2:/users /users nfs defaults 0 0 | sudo tee -a /etc/fstab'))
-        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre loop 0 0 | sudo tee -a /etc/fstab'))
     else:
         node.addService(rspec.Execute(shell='sh', command='echo compute | sudo tee /root/designation'))
 
