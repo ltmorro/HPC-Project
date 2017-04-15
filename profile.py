@@ -65,9 +65,9 @@ for i in range(10):
         node.cores = 1
         node.ram = 8192
 
-        bs1 = node.Blockstore('bs', '/users')
+        bs1 = node.Blockstore('bs1', '/users')
         bs1.size = '64GB'
-        bs2 = node.Blockstore('bs', '/storage')
+        bs2 = node.Blockstore('bs2', '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib lustre'))
