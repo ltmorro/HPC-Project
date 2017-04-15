@@ -72,7 +72,7 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='echo \\"/users *(rw,sync,no_root_squash,no_subtree_check)\\" | sudo tee -a /etc/exports'))
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
 
-        node.addService(rspec.Execute(shell='sh', command='sudo yum -y --nogpgcheck install lustre'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum -y --nogpgcheck install *.el7_lustre lustre'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
         node.addService(rspec.Execute(shell='sh', command='sudo fallocate -l 1023410176000 /storage/scratch.img'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/scratch.img'))
