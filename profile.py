@@ -78,7 +78,7 @@ for i in range(10):
 
         node.addService(rspec.Execute(shell='sh', command='sudo yum install lustre'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
-        node.addService(rspec.Execute(shell='sh', command='sudo dd if=/dev/zero of=/storage/scratch.img bs=16M count=61000'))
+        node.addService(rspec.Execute(shell='sh', command='sudo fallocate -l 1023410176000 /storage/scratch.img'))
         node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/scratch.img'))
         node.addService(rspec.Execute(shell='sh', command='mount -t lustre /storage/scratch.img /oasis/scratch/comet'))
 
