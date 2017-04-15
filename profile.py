@@ -80,6 +80,10 @@ for i in range(10):
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/keys.sh'))
         node.addService(rspec.Execute(shell='sh', command='/local/repository/keys.sh'))
+
+        node.addService(rspec.Execute(shell='sh', command='sudo touch /root/configured'))
+
+        node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
     elif i == 2:
         node.addService(rspec.Execute(shell='sh', command='echo gpu | sudo tee /root/designation'))
 
@@ -116,36 +120,39 @@ for i in range(10):
 
     #install openmpi on all nodes except the storage node
     if i != 1:
-	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y epel-release'))
-	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y python-devel python-pip'))
-	    node.addService(rspec.Execute(shell='sh', command='sudo yum install -y openmpi openmpi-devel'))
-	    node.addService(rspec.Execute(shell='sh', command='source /etc/profile'))
-	    node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'module load mpi/openmpi-x86_64; pip install mpi4py'"))
-            node.addService(rspec.Execute(shell='sh', command='echo pml = ob1 | sudo tee -a /etc/openmpi-x86_64/openmpi-mca-params.conf'))
-            node.addService(rspec.Execute(shell='sh', command='echo node2 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node2 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node4 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node4 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node5 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node5 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node6 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node6 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node7 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node7 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node8 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node8 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node9 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo node9 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
-            node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum install -y epel-release'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum install -y python-devel python-pip'))
+        node.addService(rspec.Execute(shell='sh', command='sudo yum install -y openmpi openmpi-devel'))
+        node.addService(rspec.Execute(shell='sh', command='source /etc/profile'))
+        node.addService(rspec.Execute(shell='sh', command="sudo -i su -c 'module load mpi/openmpi-x86_64; pip install mpi4py'"))
+        node.addService(rspec.Execute(shell='sh', command='echo pml = ob1 | sudo tee -a /etc/openmpi-x86_64/openmpi-mca-params.conf'))
+        node.addService(rspec.Execute(shell='sh', command='echo node2 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node2 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node3 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node4 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node4 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node5 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node5 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node6 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node6 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node7 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node7 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node8 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node8 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node9 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo node9 | sudo tee -a /etc/openmpi-x86_64/openmpi-default-hostfile'))
+        node.addService(rspec.Execute(shell='sh', command='echo \\"module load mpi/openmpi-x86_64\\" | sudo tee -a /etc/bashrc'))
 
-            # wait for storage node
-            node.addService(rspec.Execute(shell='sh', command='sleep 600'))
+        # mark node as configured
+        node.addService(rspec.Execute(shell='sh', command='sudo touch /root/configured'))
 
-    # reboot all systems
-    node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
+        # wait for storage node
+        node.addService(rspec.Execute(shell='sh', command='while not ssh node1 cat /root/configured; do sleep 10; done'))
+
+        # reboot systems
+        node.addService(rspec.Execute(shell='sh', command='sudo reboot'))
 
 portal.context.printRequestRSpec(request)
