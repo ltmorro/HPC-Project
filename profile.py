@@ -32,10 +32,16 @@ for i in range(10):
     node.addService(rspec.Execute(shell='sh', command='''sudo -i su -c \\"sed -i -e 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config\\"'''))
     node.addService(rspec.Execute(shell='sh', command="sudo sed -i 's/\/bin\/tcsh/\/bin\/bash/g' /etc/passwd"))
 
+    node.addService(rspec.Execute(shell='sh', command='echo \\"[e2fsprogs]\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"name=e2fsprogs" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"baseurl=https://downloads.hpdd.intel.com/public/e2fsprogs/latest/el7/\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
     node.addService(rspec.Execute(shell='sh', command='echo \\"[lustre-client]\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"name=lustre-client\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
     node.addService(rspec.Execute(shell='sh', command='echo \\"baseurl=https://downloads.hpdd.intel.com/public/lustre/latest-release/el7.3.1611/client/\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
     node.addService(rspec.Execute(shell='sh', command='echo \\"[lustre-server]\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+    node.addService(rspec.Execute(shell='sh', command='echo \\"name=lustre-server\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
     node.addService(rspec.Execute(shell='sh', command='echo \\"baseurl=https://downloads.hpdd.intel.com/public/lustre/latest-release/el7.3.1611/server/\\" | sudo tee -a /etc/yum.repos.d/lustre.repo'))
+
     node.addService(rspec.Execute(shell='sh', command='sudo yum install lustre-client'))
 
     if i == 0:
@@ -61,7 +67,7 @@ for i in range(10):
 
         bs1 = node.Blockstore('bs', '/users')
         bs1.size = '64GB'
-        bs2 = node.Blockstore('bs', '/mnt')
+        bs2 = node.Blockstore('bs', '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='sudo yum install nfs-utils nfs-utils-lib lustre'))
@@ -71,9 +77,9 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
 
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
-        node.addService(rspec.Execute(shell='sh', command='sudo dd if=/dev/zero of=/mnt/scratch.img bs=16M count=65535'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /mnt/scratch.img'))
-        node.addService(rspec.Execute(shell='sh', command='mount -t lustre /mnt/scratch.img /oasis/scratch/comet'))
+        node.addService(rspec.Execute(shell='sh', command='sudo dd if=/dev/zero of=/storage/scratch.img bs=16M count=65535'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/scratch.img'))
+        node.addService(rspec.Execute(shell='sh', command='mount -t lustre /storage/scratch.img /oasis/scratch/comet'))
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/keys.sh'))
         node.addService(rspec.Execute(shell='sh', command='/local/repository/keys.sh'))
