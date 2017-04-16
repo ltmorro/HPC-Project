@@ -18,7 +18,7 @@ request.addTour(tour)
 link = request.LAN('lan')
 
 for i in range(10):
-    node = request.RawPC('node' + str(i))
+    node = request.XenVM('node' + str(i))
     node.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS72-64-STD'
     iface = node.addInterface('if' + str(i))
     iface.addAddress(rspec.IPv4Address('192.168.1.' + str(i + 1), '255.255.255.0'))
