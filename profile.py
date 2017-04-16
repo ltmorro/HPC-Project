@@ -71,10 +71,17 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo exportfs -a'))
 
         node.addService(rspec.Execute(shell='sh', command='sudo yum -y --nogpgcheck install \\"kernel-*.el7_lustre\\" lustre'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /mnt/mdt'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /mnt/ost0'))
+        node.addService(rspec.Execute(shell='sh', command='sudo fallocate -l 1G /storage/mdt.img'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/mdt.img'))
+        #node.addService(rspec.Execute(shell='sh', command='echo /storage/mdt.img /mnt/mdt lustre loop 0 0 | sudo tee -a /etc/fstab'))
+        node.addService(rspec.Execute(shell='sh', command='sudo fallocate -l 939G /storage/ost0.img'))
+        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgsnode=192.168.1.2@tcp0 --ost --index=0 /storage/ost0.img'))
+        #node.addService(rspec.Execute(shell='sh', command='echo /storage/ost0.img /mnt/ost0 lustre loop 0 0 | sudo tee -a /etc/fstab'))
+
         node.addService(rspec.Execute(shell='sh', command='sudo mkdir -p /oasis/scratch/comet'))
-        node.addService(rspec.Execute(shell='sh', command='sudo fallocate -l 1023410176000 /storage/scratch.img'))
-        node.addService(rspec.Execute(shell='sh', command='sudo mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/scratch.img'))
-        #node.addService(rspec.Execute(shell='sh', command='echo /storage/scratch.img /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
+        #node.addService(rspec.Execute(shell='sh', command='echo 192.168.1.2@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0 | sudo tee -a /etc/fstab'))
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/keys.sh'))
         node.addService(rspec.Execute(shell='sh', command='/local/repository/keys.sh'))
@@ -154,7 +161,7 @@ for i in range(10):
         node.addService(rspec.Execute(shell='sh', command='sudo touch /root/configured'))
 
         # wait for storage node
-        node.addService(rspec.Execute(shell='sh', command='until ssh node1 cat /root/configured; do sleep 10; done'))
+        node.addService(rspec.Execute(shell='sh', command='until sudo ssh node1 cat /root/configured; do sleep 10; done'))
 
         # reboot systems
         node.addService(rspec.Execute(shell='sh', command='sudo touch /root/reboot'))
