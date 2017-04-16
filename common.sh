@@ -61,6 +61,8 @@ setup_lustre() {
     mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index=0 /storage/ost0.img
     echo /storage/ost0.img /mnt/ost0 lustre loop 0 0 >>/etc/fstab
 
+    lnetctl net add --net tcp0 --if eth1
+
     mkdir -p /oasis/scratch/comet
     echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
 }
