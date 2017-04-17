@@ -75,6 +75,7 @@ setup_lustre_client() {
 
     mkdir -p /oasis/scratch/comet
     echo "#$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    mount /oasis/scratch/comet
 }
 
 setup_mpi() {
