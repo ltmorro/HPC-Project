@@ -115,9 +115,7 @@ wait_for_storage() {
     done
 }
 
-configured() {
-    return [ -e /root/configured ]
-}
+alias configured='test -e /root/configured'
 
 if configured; then
     exit 0
