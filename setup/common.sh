@@ -65,7 +65,7 @@ install_lustre() {
 
     yum -y --nogpgcheck install "kernel-*.el7_lustre" lustre
 
-    echo "options lnet networks=tcp0(eth1)" >>/etc/lustre.conf
+    echo "options lnet networks=tcp0(eth1)" >>/etc/modprobe.d/lustre.conf
 }
 
 setup_lustre() {
