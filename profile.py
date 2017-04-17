@@ -30,8 +30,8 @@ for i in range(10):
 
         node.routable_control_ip = True
 
-        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/login.sh'))
-        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/login.sh'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/login.sh'))
+        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/login.sh'))
     elif i == 1:
         node.cores = 1
         node.ram = 8192
@@ -41,25 +41,25 @@ for i in range(10):
         bs2 = node.Blockstore('bs2', '/storage')
         bs2.size = '1024GB'
 
-        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/storage.sh'))
-        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/storage.sh'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/storage.sh'))
+        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/storage.sh'))
     elif i == 2:
         node.cores = 2
         node.ram = 8192
 
-        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/gpu.sh'))
-        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/gpu.sh'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/gpu.sh'))
+        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/gpu.sh'))
     elif i == 3:
         node.cores = 4
         node.ram = 16384
 
-        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/large_memory.sh'))
-        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/large_memory.sh'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/large_memory.sh'))
+        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/large_memory.sh'))
     else:
         node.cores = 2
         node.ram = 8192
 
-        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/compute.sh'))
-        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/compute.sh'))
+        node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/compute.sh'))
+        node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/compute.sh'))
 
 portal.context.printRequestRSpec(request)
