@@ -64,13 +64,11 @@ install_lustre() {
     setup_lustre_repo
 
     yum -y --nogpgcheck install "kernel-*.el7_lustre" lustre
+
+    echo "options lnet networks=tcp0(eth1)" >>/etc/lustre.conf
 }
 
 setup_lustre() {
-    lnetctl lnet configure
-    lnetctl net add --del tcp0
-    lnetctl net add --net tcp0 --if eth1
-
     mkdir -p /mnt/mdt
     mkdir -p /mnt/ost0
     fallocate -l 1G /storage/mdt.img
