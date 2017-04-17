@@ -9,6 +9,12 @@ set_configured() {
     touch /root/configured
 }
 
+set_ready() {
+    touch /root/ready
+}
+
+alias configured='test -e /root/configured'
+
 fix_shell() {
     sed -i 's/\/bin\/tcsh/\/bin\/bash/g' /etc/passwd
 }
@@ -48,24 +54,27 @@ setup_lustre_repo() {
     echo "baseurl=https://downloads.hpdd.intel.com/public/lustre/latest-release/el7.3.1611/server/" >>/etc/yum.repos.d/lustre.repo
 }
 
-setup_lustre() {
+install_lustre() {
     setup_lustre_repo
 
     yum -y --nogpgcheck install "kernel-*.el7_lustre" lustre
+}
+
+setup_lustre() {
+    lnetctl net add --net tcp0 --if eth1
 
     mkdir -p /mnt/mdt
     mkdir -p /mnt/ost0
     fallocate -l 1G /storage/mdt.img
     mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/mdt.img
-    echo "#/storage/mdt.img /mnt/mdt lustre loop 0 0" >>/etc/fstab
+    echo "/storage/mdt.img /mnt/mdt lustre loop 0 0" >>/etc/fstab
     fallocate -l 939G /storage/ost0.img
     mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index=0 /storage/ost0.img
-    echo "#/storage/ost0.img /mnt/ost0 lustre loop 0 0" >>/etc/fstab
-
-    lnetctl net add --net tcp0 --if eth1
+    echo "/storage/ost0.img /mnt/ost0 lustre loop 0 0" >>/etc/fstab
 
     mkdir -p /oasis/scratch/comet
-    echo "#$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    mount /oasis/scratch/comet
 }
 
 setup_lustre_client() {
@@ -74,7 +83,7 @@ setup_lustre_client() {
     yum -y --nogpgcheck install lustre-client
 
     mkdir -p /oasis/scratch/comet
-    echo "#$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
     mount /oasis/scratch/comet
 }
 
@@ -110,13 +119,7 @@ setup_mpi() {
 }
 
 wait_for_storage() {
-    until ssh node1 cat /root/configured; do
+    until ssh node1 cat /root/ready; do
         sleep 10
     done
 }
-
-alias configured='test -e /root/configured'
-
-if configured; then
-    exit 0
-fi

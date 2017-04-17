@@ -1,6 +1,10 @@
 #!/bin/sh
 source `dirname "$0"`/common.sh
 
+if configured; then
+    exit
+fi
+
 designate compute
 fix_shell
 
