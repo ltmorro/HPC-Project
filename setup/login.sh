@@ -7,6 +7,7 @@ fi
 
 designate login
 fix_shell
+fix_ssh
 
 set_configured
 

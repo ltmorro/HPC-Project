@@ -10,6 +10,7 @@ fi
 
 designate storage
 fix_shell
+fix_ssh
 
 setup_nfs
 

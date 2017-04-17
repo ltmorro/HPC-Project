@@ -7,6 +7,7 @@ fi
 
 designate gpu
 fix_shell
+fix_ssh
 
 setup_mpi
 
