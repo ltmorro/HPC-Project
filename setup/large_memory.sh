@@ -10,9 +10,11 @@ if configured; then
     exit
 fi
 
-designate login
+designate large_memory
 fix_shell
 fix_ssh
+
+setup_mpi
 
 install_lustre_client
 

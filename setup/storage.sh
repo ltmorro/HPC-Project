@@ -16,8 +16,8 @@ setup_nfs
 
 make_keys
 
-set_configured
-
 install_lustre
+
+set_configured
 
 reboot

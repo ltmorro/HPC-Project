@@ -87,11 +87,13 @@ setup_lustre() {
     mount /oasis/scratch/comet
 }
 
-setup_lustre_client() {
+install_lustre_client() {
     setup_lustre_repo
 
-    yum -y --nogpgcheck install lustre-client
+    yum -y --nogpgcheck install kernel lustre-client
+}
 
+setup_lustre_client() {
     mkdir -p /oasis/scratch/comet
     echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
     mount /oasis/scratch/comet
