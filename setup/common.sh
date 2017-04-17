@@ -33,6 +33,7 @@ setup_nfs_client() {
     rm -rf /users
     mkdir -p /users
     echo "192.168.1.2:/users /users nfs defaults 0 0" >>/etc/fstab
+    mount /users
 }
 
 setup_lustre_repo() {
@@ -56,15 +57,15 @@ setup_lustre() {
     mkdir -p /mnt/ost0
     fallocate -l 1G /storage/mdt.img
     mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/mdt.img
-    echo /storage/mdt.img /mnt/mdt lustre loop 0 0 >>/etc/fstab
+    echo "#/storage/mdt.img /mnt/mdt lustre loop 0 0" >>/etc/fstab
     fallocate -l 939G /storage/ost0.img
     mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index=0 /storage/ost0.img
-    echo /storage/ost0.img /mnt/ost0 lustre loop 0 0 >>/etc/fstab
+    echo "#/storage/ost0.img /mnt/ost0 lustre loop 0 0" >>/etc/fstab
 
     lnetctl net add --net tcp0 --if eth1
 
     mkdir -p /oasis/scratch/comet
-    echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    echo "#$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
 }
 
 setup_lustre_client() {
@@ -73,7 +74,7 @@ setup_lustre_client() {
     yum -y --nogpgcheck install lustre-client
 
     mkdir -p /oasis/scratch/comet
-    echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    echo "#$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
 }
 
 setup_mpi() {
