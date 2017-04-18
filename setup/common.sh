@@ -85,6 +85,13 @@ setup_lustre() {
     mount /oasis/scratch/comet
 }
 
+setup_scratch() {
+    pushd /users
+    find * -mindepth 0 -maxdepth 0 -exec sudo mkdir -p /oasis/scratch/comet/{} \;
+    find * -mindepth 0 -maxdepth 0 -exec sudo chown {}:pdc-edu-lab-PG0 /oasis/scratch/comet/{} \;
+    popd
+}
+
 install_lustre_client() {
     setup_lustre_repo
 

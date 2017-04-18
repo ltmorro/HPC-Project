@@ -5,6 +5,8 @@ if configured; then
     fix_ssh
 
     setup_lustre
+    setup_scratch
+
     set_ready
 
     exit
