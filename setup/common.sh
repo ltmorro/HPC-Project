@@ -27,9 +27,9 @@ fix_ssh() {
 
 make_keys() {
     pushd /users
-    find * -mindepth 0 -maxdepth 0 -exec sudo -u {} mkdir -p /users/{}/.ssh \;
-    yes '' | find * -mindepth 0 -maxdepth 0 -exec sudo -u {} ssh-keygen -P '' \;
-    find * -mindepth 0 -maxdepth 0 -exec sudo -u {} sh -c 'cat /users/{}/.ssh/id_rsa.pub >>/users/{}/.ssh/authorized_keys' \;
+    find * -mindepth 0 -maxdepth 0 -not -path lost+found -exec sudo -u {} mkdir -p /users/{}/.ssh \;
+    yes '' | find * -mindepth 0 -maxdepth 0 -not -path lost+found -exec sudo -u {} ssh-keygen -P '' \;
+    find * -mindepth 0 -maxdepth 0 -not -path lost+found -exec sudo -u {} sh -c 'cat /users/{}/.ssh/id_rsa.pub >>/users/{}/.ssh/authorized_keys' \;
     popd
 }
 
@@ -87,8 +87,8 @@ setup_lustre() {
 
 setup_scratch() {
     pushd /users
-    find * -mindepth 0 -maxdepth 0 -exec sudo mkdir -p /oasis/scratch/comet/{} \;
-    find * -mindepth 0 -maxdepth 0 -exec sudo chown {}:pdc-edu-lab-PG0 /oasis/scratch/comet/{} \;
+    find * -mindepth 0 -maxdepth 0 -not -path lost+found -exec sudo mkdir -p /oasis/scratch/comet/{} \;
+    find * -mindepth 0 -maxdepth 0 -not -path lost+found -exec sudo chown {}:pdc-edu-lab-PG0 /oasis/scratch/comet/{} \;
     popd
 }
 
