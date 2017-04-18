@@ -2,6 +2,8 @@
 source `dirname "$0"`/common.sh
 
 if configured; then
+    fix_ssh
+
     setup_lustre
     set_ready
 
@@ -10,7 +12,6 @@ fi
 
 designate storage
 fix_shell
-fix_ssh
 
 setup_nfs
 

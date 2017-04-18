@@ -2,6 +2,8 @@
 source `dirname "$0"`/common.sh
 
 if configured; then
+    fix_ssh
+
     wait_for_storage
 
     setup_nfs_client
@@ -12,7 +14,6 @@ fi
 
 designate compute
 fix_shell
-fix_ssh
 
 setup_mpi
 
