@@ -17,7 +17,7 @@ fix_shell
 
 setup_module
 
-install_lustre_client
+install_lustre
 
 set_configured
 

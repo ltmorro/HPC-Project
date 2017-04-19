@@ -47,17 +47,26 @@ for i in range(10):
         node.cores = 2
         node.ram = 8192
 
+        bs2 = node.Blockstore('bs2', '/storage')
+        bs2.size = '1024GB'
+
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/gpu.sh'))
         node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/gpu.sh'))
     elif i == 3:
         node.cores = 4
         node.ram = 16384
 
+        bs2 = node.Blockstore('bs2', '/storage')
+        bs2.size = '1024GB'
+
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/large_memory.sh'))
         node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/large_memory.sh'))
     else:
         node.cores = 2
         node.ram = 8192
+
+        bs2 = node.Blockstore('bs2', '/storage')
+        bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/compute.sh'))
         node.addService(rspec.Execute(shell='sh', command='sudo /local/repository/setup/compute.sh'))

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 storage=192.168.1.2
 
 designate() {
@@ -71,10 +71,12 @@ install_lustre() {
 setup_lustre() {
     mkdir -p /mnt/mdt
     mkdir -p /mnt/ost0
+
     fallocate -l 1G /storage/mdt.img
     mkfs.lustre --fsname=scratch --mgs --mdt --index=0 /storage/mdt.img
     echo "/storage/mdt.img /mnt/mdt lustre loop 0 0" >>/etc/fstab
     mount /mnt/mdt
+
     fallocate -l 939G /storage/ost0.img
     mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index=0 /storage/ost0.img
     echo "/storage/ost0.img /mnt/ost0 lustre loop 0 0" >>/etc/fstab
@@ -92,10 +94,18 @@ setup_scratch() {
     popd
 }
 
-install_lustre_client() {
-    setup_lustre_repo
+setup_lustre_node() {
+    number="$(hostname | sed -e 's/node//' | xargs -I. expr . - 1)"
 
-    yum -y --nogpgcheck install kernel lustre-client
+    mkdir -p /mnt/ost"$number"
+    fallocate -l 939G /storage/ost"$number".img
+    mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index="$number" /storage/ost0.img
+    echo "/storage/ost"$number".img /mnt/ost$number lustre loop 0 0" >>/etc/fstab
+    mount /mnt/ost"$number"
+
+    mkdir -p /oasis/scratch/comet
+    echo "$storage@tcp0:/scratch /oasis/scratch/comet lustre defaults 0 0" >>/etc/fstab
+    mount /oasis/scratch/comet
 }
 
 setup_lustre_client() {
