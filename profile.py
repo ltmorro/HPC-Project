@@ -36,9 +36,9 @@ for i in range(10):
         node.cores = 1
         node.ram = 8192
 
-        bs1 = node.Blockstore('bs1', '/users')
+        bs1 = node.Blockstore('bs0', '/users')
         bs1.size = '64GB'
-        bs2 = node.Blockstore('bs2', '/storage')
+        bs2 = node.Blockstore('bs1', '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/storage.sh'))
@@ -47,7 +47,7 @@ for i in range(10):
         node.cores = 2
         node.ram = 8192
 
-        bs2 = node.Blockstore('bs2', '/storage')
+        bs2 = node.Blockstore('bs' + str(i), '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/gpu.sh'))
@@ -56,7 +56,7 @@ for i in range(10):
         node.cores = 4
         node.ram = 16384
 
-        bs2 = node.Blockstore('bs2', '/storage')
+        bs2 = node.Blockstore('bs' + str(i), '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/large_memory.sh'))
@@ -65,7 +65,7 @@ for i in range(10):
         node.cores = 2
         node.ram = 8192
 
-        bs2 = node.Blockstore('bs2', '/storage')
+        bs2 = node.Blockstore('bs' + str(i), '/storage')
         bs2.size = '1024GB'
 
         node.addService(rspec.Execute(shell='sh', command='chmod +x /local/repository/setup/compute.sh'))
