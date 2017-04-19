@@ -15,6 +15,7 @@ fi
 designate large_memory
 fix_shell
 
+setup_module
 setup_mpi
 
 install_lustre_client

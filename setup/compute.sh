@@ -15,6 +15,7 @@ fi
 designate compute
 fix_shell
 
+setup_module
 setup_mpi
 
 install_lustre_client

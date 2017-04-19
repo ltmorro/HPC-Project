@@ -104,6 +104,10 @@ setup_lustre_client() {
     mount /oasis/scratch/comet
 }
 
+setup_module() {
+    yum install -y environment-modules
+}
+
 setup_mpi() {
     yum install -y epel-release
     yum install -y python-devel python-pip

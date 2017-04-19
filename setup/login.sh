@@ -15,6 +15,8 @@ fi
 designate login
 fix_shell
 
+setup_module
+
 install_lustre_client
 
 set_configured
