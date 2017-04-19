@@ -99,7 +99,7 @@ setup_lustre_node() {
 
     mkdir -p /mnt/ost"$number"
     fallocate -l 939G /storage/ost"$number".img
-    mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index="$number" /storage/ost0.img
+    mkfs.lustre --fsname=scratch --mgsnode="$storage@tcp0" --ost --index="$number" /storage/ost"$number".img
     echo "/storage/ost"$number".img /mnt/ost$number lustre loop 0 0" >>/etc/fstab
     mount /mnt/ost"$number"
 
