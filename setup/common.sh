@@ -95,7 +95,7 @@ setup_scratch() {
 }
 
 setup_lustre_node() {
-    number="$(hostname | sed -e 's/node//' | xargs -I. expr . - 1)"
+    number="$(hostname | cut -d. -f1 | sed -e 's/node//' | xargs -I. expr . - 1)"
 
     mkdir -p /mnt/ost"$number"
     fallocate -l 939G /storage/ost"$number".img
